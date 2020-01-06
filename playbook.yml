@@ -1,32 +1,32 @@
-- hosts: localhost
-  connection: local
-  become: yes
-  gather_facts: false
-  vars:
-    CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789:/
-    CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
-    CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
-    MOUNT_DIRECTORY: /mnt/cephfs/
-    PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-683795e9-30d6-11ea-a089-aa3b012fb514/
-  tasks:
-    - name: Mount CephFS
-      mount:
-        path: "{{ MOUNT_DIRECTORY }}"
-        src: "{{ CEPH_MONITORS }}"
-        fstype: ceph
-        opts: "{{ 'name=' + CEPH_USER + ',secret=' + CEPH_SECRET}}"
-        state: mounted
+# - hosts: localhost
+#   connection: local
+#   become: yes
+#   gather_facts: false
+#   vars:
+#     CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789:/
+#     CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
+#     CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
+#     MOUNT_DIRECTORY: /mnt/cephfs/
+#     PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-683795e9-30d6-11ea-a089-aa3b012fb514/
+#   tasks:
+#     - name: Mount CephFS
+#       mount:
+#         path: "{{ MOUNT_DIRECTORY }}"
+#         src: "{{ CEPH_MONITORS }}"
+#         fstype: ceph
+#         opts: "{{ 'name=' + CEPH_USER + ',secret=' + CEPH_SECRET}}"
+#         state: mounted
 
-    - name: Copy static directory to CephFS
-      copy:
-        src: static/
-        dest: "{{ MOUNT_DIRECTORY + PV_PATH }}"
-        remote_src: yes
+#     - name: Copy static directory to CephFS
+#       copy:
+#         src: static/
+#         dest: "{{ MOUNT_DIRECTORY + PV_PATH }}"
+#         remote_src: yes
     
-    - name: Unmount CephFS
-      mount:
-        path: "{{ MOUNT_DIRECTORY }}"
-        state: absent
+#     - name: Unmount CephFS
+#       mount:
+#         path: "{{ MOUNT_DIRECTORY }}"
+#         state: absent
 
 
 - hosts: kub-master
