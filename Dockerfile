@@ -1,7 +1,7 @@
-FROM python:3.6
+FROM python:3.7
 
 WORKDIR /usr/src/app
 
-RUN echo "hello" > index.html
+RUN mkdir static && echo "hello" > static/index.html
 
-CMD python3 -m http.server 8000
+CMD python3 -m http.server 8000 --directory static/
