@@ -3,10 +3,11 @@
   become: yes
   gather_facts: false
   vars:
-    MOUNT_DIRECTORY: "{{ lookup('env','MOUNT_DIRECTORY') }}"
     CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789:/
     CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
     CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
+    MOUNT_DIRECTORY: /mnt/cephfs/
+    PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-3e7cfd79-29c6-11ea-a936-9e006f2f84c4/
   tasks:
     - name: Mount CephFS
       mount:
@@ -16,12 +17,11 @@
         opts: "{{ 'name=' + CEPH_USER + ',secret=' + CEPH_SECRET}}"
         state: mounted
 
-
-    - name: LS CephFS
-      command: echo $MOUNT_DIRECTORY$PV_PATH/
-
     - name: Copy static directory to CephFS
-      command: cp -r $PWD/static/* $MOUNT_DIRECTORY$PV_PATH/
+      copy:
+        src: static/
+        dest: "{{ MOUNT_DIRECTORY + PV_PATH }}"
+        remote_src: yes
     
     - name: Unmount CephFS
       mount:

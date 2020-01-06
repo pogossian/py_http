@@ -3,8 +3,6 @@ variables:
     MAJOR_VER: pogossian/pyhttp:1
     MINOR_VER: pogossian/pyhttp:1.0
     BUGFIX_VER: pogossian/pyhttp:1.0.2
-    MOUNT_DIRECTORY: /mnt/cephfs/
-    PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-3e7cfd79-29c6-11ea-a936-9e006f2f84c4
   
 stages:
 - Build image
