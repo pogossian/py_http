@@ -33,10 +33,10 @@ push image:
 
 deploy on k8s:
     stage: Deploy
-    before_script:
-    - sudo mkdir -p ${MOUNT_DIRECTORY}
-    - sudo mount -t ceph ${CEPH_MONITORS}:/ ${MOUNT_DIRECTORY} -o name=${CEPH_USER},secret=${CEPH_SECRET}
-    - sudo cp -r static/* ${MOUNT_DIRECTORY}${PV_PATH}/
-    - sudo umount ${MOUNT_DIRECTORY}
+    # before_script:
+    # - sudo mkdir -p ${MOUNT_DIRECTORY}
+    # - sudo mount -t ceph ${CEPH_MONITORS}:/ ${MOUNT_DIRECTORY} -o name=${CEPH_USER},secret=${CEPH_SECRET}
+    # - sudo cp -r static/* ${MOUNT_DIRECTORY}${PV_PATH}/
+    # - sudo umount ${MOUNT_DIRECTORY}
     script:
-    - printenv
+    - ansible-playbook playbook.yml

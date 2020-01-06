@@ -1,0 +1,12 @@
+- hosts: localhost
+  connection: local
+  become: yes
+  gather_facts: false
+  vars:
+    MOUNT_DIRECTORY: /mnt/cephfs/
+    CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789
+    PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-3e7cfd79-29c6-11ea-a936-9e006f2f84c4
+    CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
+    CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
+  tasks:
+    - debug: msg={{ MOUNT_DIRECTORY,CEPH_MONITORS,PV_PATH,CEPH_USER,CEPH_SECRET }}
