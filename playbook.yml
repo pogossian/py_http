@@ -14,7 +14,7 @@
         path: "{{ MOUNT_DIRECTORY }}"
         src: "{{ CEPH_MONITORS }}"
         fstype: ceph
-        opts: "{{ 'name=' + CEPH_USER + ',secret=' CEPH_SECRET}}"
+        opts: "{{ 'name=' + CEPH_USER + ',secret=' + CEPH_SECRET}}"
         state: mounted
     
     - name: Ls ceph
