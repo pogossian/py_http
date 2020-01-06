@@ -4,12 +4,12 @@ variables:
     MINOR_VER: pogossian/pyhttp:1.0
     BUGFIX_VER: pogossian/pyhttp:1.0.2
   
-  stages:
-  - Build image
-  - Push to Docker Hub
-  - Deploy
-  
-  build image:
+stages:
+- Build image
+- Push to Docker Hub
+- Deploy
+
+build image:
     stage: Build image
     script:
     - docker build -t $LATEST_VER -t $MAJOR_VER -t $MINOR_VER -t $BUGFIX_VER .
