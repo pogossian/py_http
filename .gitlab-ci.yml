@@ -34,7 +34,6 @@ push image:
 deploy on k8s:
     stage: Deploy
     before_script:
-    - echo 'mounting cephfs'
     - sudo mkdir -p ${MOUNT_DIRECTORY}
     - sudo mount -t ceph ${CEPH_MONITORS}:/ ${MOUNT_DIRECTORY} -o name=${CEPH_USER},secret=${CEPH_SECRET}
     - sudo cp -r static/* ${MOUNT_DIRECTORY}${PV_PATH}/
