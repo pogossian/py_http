@@ -36,12 +36,12 @@
   gather_facts: false
   vars:
     PROJECT_NAME: "{{ lookup('env','CI_PROJECT_TITLE') }}"
-    BRANCH: "{{ lookup('env','CI_COMMIT_BRANCH') }}"
+    PROJECT_BRANCH: "{{ lookup('env','CI_COMMIT_BRANCH') }}"
   tasks:
     - name: Copy k8s yamls to master node
       copy:
         src: .kube/
-        dest: "{{ PROJECT_NAME + '_' + PV_PATH }}"
+        dest: "{{ PROJECT_NAME + '_' + PROJECT_BRANCH }}"
 
 
 
