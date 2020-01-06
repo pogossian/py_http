@@ -3,6 +3,9 @@ variables:
     MAJOR_VER: pogossian/pyhttp:1
     MINOR_VER: pogossian/pyhttp:1.0
     BUGFIX_VER: pogossian/pyhttp:1.0.2
+    MOUNT_DIRECTORY: /mnt/cephfs/
+    CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789
+    PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-3e7cfd79-29c6-11ea-a936-9e006f2f84c4
   
 stages:
 - Build image
@@ -31,6 +34,9 @@ push image:
 deploy on k8s:
     stage: Deploy
     before_script:
-    - echo 'before_script'
+    - echo 'mounting cephfs'
+    - sudo mount -t ceph ${CEPH_MONITORS}:/ ${MOUNT_DIRECTORY} -o name=${CEPH_USER},secret=${CEPH_SECRET}
+    - echo 1 > ${MOUNT_DIRECTORY}${PV_PATH}/1.html
+    - sudo umount ${MOUNT_DIRECTORY}
     script:
     - printenv
