@@ -42,6 +42,9 @@
       copy:
         src: .kube/
         dest: "{{ PROJECT_NAME + '_' + PROJECT_BRANCH }}"
-
+    
+    - name: Applying configs
+      command: kubectl apply -f "{{ PROJECT_NAME + '_' + PROJECT_BRANCH }}"
+      
 
 
