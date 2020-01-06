@@ -36,7 +36,7 @@ deploy on k8s:
     before_script:
     - echo 'mounting cephfs'
     - sudo mount -t ceph ${CEPH_MONITORS}:/ ${MOUNT_DIRECTORY} -o name=${CEPH_USER},secret=${CEPH_SECRET}
-    - sudo echo 1 > ${MOUNT_DIRECTORY}${PV_PATH}/1.html
+    - echo 1 | sudo tee ${MOUNT_DIRECTORY}${PV_PATH}/1.html
     - sudo umount ${MOUNT_DIRECTORY}
     script:
     - printenv
