@@ -18,7 +18,7 @@
 
 
     - name: LS CephFS
-      command: ls -al $MOUNT_DIRECTORY$PV_PATH/
+      command: echo $MOUNT_DIRECTORY$PV_PATH/
 
     - name: Copy static directory to CephFS
       command: cp -r $PWD/static/* $MOUNT_DIRECTORY$PV_PATH/
