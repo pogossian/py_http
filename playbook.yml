@@ -3,6 +3,7 @@
   become: yes
   gather_facts: false
   vars:
+    PROJECT_BRANCH: "{{ lookup('env','CI_COMMIT_BRANCH') }}"
     CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789:/
     CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
     CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
