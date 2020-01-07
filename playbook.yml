@@ -36,10 +36,17 @@
   vars:
     PROJECT_NAME: "{{ lookup('env','CI_PROJECT_TITLE') }}"
     PROJECT_BRANCH: "{{ lookup('env','CI_COMMIT_BRANCH') }}"
+    CONF_DIR: .kube/
   tasks:
+    - name: Checking if develop branch
+      set_fact:
+        CONF_DIR: .kube_develop/
+      when: PROJECT_BRANCH == "develop"
+
+
     - name: Copy k8s yamls to master node
       copy:
-        src: .kube/
+        src: CONF_DIR
         dest: "{{ PROJECT_NAME + '_' + PROJECT_BRANCH }}"
     
     - name: Applying configs

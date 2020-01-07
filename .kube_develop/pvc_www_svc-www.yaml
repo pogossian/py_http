@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: py-http-develop
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: py-http-pv-claim
+  namespace: py-http-develop
+spec:
+  storageClassName: cephfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-http
+  namespace: py-http-develop
+  labels:
+    app: py-http
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: py-http
+  template:
+    metadata:
+      labels:
+        app: py-http
+    spec:
+      containers:
+      - name: py-http
+        image: pogossian/pyhttp:1.0.3
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - name: py-http-persistent-storage
+            mountPath: /usr/src/app/static
+            readOnly: false
+      volumes:
+      - name: py-http-persistent-storage
+        persistentVolumeClaim:
+          claimName: py-http-pv-claim
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: py-http-service
+  namespace: py-http-develop
+  labels:
+    app: py-http
+spec:
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 8000
+  externalIPs:
+  - 176.120.28.174
+  - 176.120.29.159
+  selector:
+    app: py-http
+  type: LoadBalancer

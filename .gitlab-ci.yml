@@ -11,6 +11,8 @@ stages:
 
 build image:
     stage: Build image
+    only:
+    - master
     script:
     - docker build -t $LATEST_VER -t $MAJOR_VER -t $MINOR_VER -t $BUGFIX_VER .
   
@@ -29,6 +31,9 @@ push image:
 
 deploy on k8s:
     stage: Deploy
+    only:
+    - master
+    - develop
     before_script:
     - ansible --version
     script:
