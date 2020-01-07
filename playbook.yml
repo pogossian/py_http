@@ -46,7 +46,7 @@
 
     - name: Copy k8s yamls to master node
       copy:
-        src: CONF_DIR
+        src: "{{ CONF_DIR }}"
         dest: "{{ PROJECT_NAME + '_' + PROJECT_BRANCH }}"
     
     - name: Applying configs
