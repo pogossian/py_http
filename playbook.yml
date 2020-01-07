@@ -1,37 +1,37 @@
-# - hosts: localhost
-#   connection: local
-#   become: yes
-#   gather_facts: false
-#   vars:
-#     CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789:/
-#     CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
-#     CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
-#     MOUNT_DIRECTORY: /mnt/cephfs/
-#     PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-5dc90db8-30e2-11ea-a089-aa3b012fb514/
-#   tasks:
-#     - name: Checking if develop branch
-#       set_fact:
-#         PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-98521750-30e2-11ea-a089-aa3b012fb514/
-#       when: PROJECT_BRANCH == "develop"
+- hosts: localhost
+  connection: local
+  become: yes
+  gather_facts: false
+  vars:
+    CEPH_MONITORS: 10.120.29.114:6789,10.120.28.174:6789,10.120.29.159:6789:/
+    CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
+    CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
+    MOUNT_DIRECTORY: /mnt/cephfs/
+    PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-5dc90db8-30e2-11ea-a089-aa3b012fb514/
+  tasks:
+    - name: Checking if develop branch
+      set_fact:
+        PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-dfbb8fad-30e4-11ea-a089-aa3b012fb514/
+      when: PROJECT_BRANCH == "develop"
 
-#     - name: Mount CephFS
-#       mount:
-#         path: "{{ MOUNT_DIRECTORY }}"
-#         src: "{{ CEPH_MONITORS }}"
-#         fstype: ceph
-#         opts: "{{ 'name=' + CEPH_USER + ',secret=' + CEPH_SECRET}}"
-#         state: mounted
+    - name: Mount CephFS
+      mount:
+        path: "{{ MOUNT_DIRECTORY }}"
+        src: "{{ CEPH_MONITORS }}"
+        fstype: ceph
+        opts: "{{ 'name=' + CEPH_USER + ',secret=' + CEPH_SECRET}}"
+        state: mounted
 
-#     - name: Copy static directory to CephFS
-#       copy:
-#         src: static/
-#         dest: "{{ MOUNT_DIRECTORY + PV_PATH }}"
-#         remote_src: yes
+    - name: Copy static directory to CephFS
+      copy:
+        src: static/
+        dest: "{{ MOUNT_DIRECTORY + PV_PATH }}"
+        remote_src: yes
     
-#     - name: Unmount CephFS
-#       mount:
-#         path: "{{ MOUNT_DIRECTORY }}"
-#         state: absent
+    - name: Unmount CephFS
+      mount:
+        path: "{{ MOUNT_DIRECTORY }}"
+        state: absent
 
 
 - hosts: kub-master
