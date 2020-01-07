@@ -7,8 +7,13 @@
 #     CEPH_USER: "{{ lookup('env','CEPH_USER') }}"
 #     CEPH_SECRET: "{{ lookup('env','CEPH_SECRET') }}"
 #     MOUNT_DIRECTORY: /mnt/cephfs/
-#     PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-683795e9-30d6-11ea-a089-aa3b012fb514/
+#     PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-5dc90db8-30e2-11ea-a089-aa3b012fb514/
 #   tasks:
+#     - name: Checking if develop branch
+#       set_fact:
+#         PV_PATH: pvc-volumes/kubernetes/kubernetes-dynamic-pvc-98521750-30e2-11ea-a089-aa3b012fb514/
+#       when: PROJECT_BRANCH == "develop"
+
 #     - name: Mount CephFS
 #       mount:
 #         path: "{{ MOUNT_DIRECTORY }}"

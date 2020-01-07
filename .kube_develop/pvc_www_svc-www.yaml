@@ -8,7 +8,7 @@ metadata:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: py-http-pv-claim
+  name: py-http-dev-pv-claim
   namespace: py-http-develop
 spec:
   storageClassName: cephfs
